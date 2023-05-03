@@ -18,3 +18,23 @@
 
 //input.on('data', chunk => output.write(chunk));
 //input.on('error', error => console.log('Error', error.message));
+
+const fs = require('fs');
+const {stdin, stdout} = require('process');
+const path = require('path');
+
+filePath = path.join(__dirname)
+
+
+//r: открыть файл для чтения
+//r+: открыть файл для чтения и записи
+//rs: открыть файл для чтения в синхронном режиме
+//w: открыть файл для записи
+//a: открыть файл для записи данных в конец файла
+//a+: открыть файл для чтения и для записи данных в конец файла
+
+
+fs.open('draft.txt', (err) => {
+   if (err) throw err;
+   stdout.write('File created');
+});
