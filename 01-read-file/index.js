@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const {stdout} = require('process');
 
 let data = '';
 
@@ -12,9 +13,11 @@ readableStream.on('data', chunk => console.log(chunk.length));
 
 readableStream.on('data', chunk => data += chunk);
 
-//завершение потока - событие 'end'
-readableStream.on('data', () => console.log(data));
-readableStream.on('data', () => console.log('End', data.length));
+//readableStream.on('data', () => console.log(data));
+//readableStream.on('data', () => console.log('End', data.length));
 readableStream.on('error', error => console.log('Error', error.message));
 
-console.log(filePath);
+
+//завершение потока - событие 'end'
+
+readableStream.on('end', () => stdout.write(data));
