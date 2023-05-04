@@ -1,29 +1,39 @@
-//Поток записи, является противоположностью потока чтения. Он используется для записи данных. Записывать данные можно, к примеру: в стандартный поток вывода, файл, response при обработке на сервере, другой поток и т.д.
+const fs = require('fs');
+const {stdin, stdout} = require('process');
+const path = require('path');
+// const readline = require('node:readline/promises');
 
-//Если мы читаем данные по частям, логично записывать их тоже по частям.
-//Для этого создадим поток записи output
+filePath = path.join(__dirname, 'draft.txt');
 
-//const fs = require('fs');
 //const output = fs.createWriteStream('destination.txt');
 
 //Если не создать файл, который указан в качестве пункта назначения наших данных, destination.txt, перед началом записи он будет создан автоматически.
 //Поток чтения назовём input и каждую часть данных, которую он отдает, будем записывать в файл при помощи метода output.write()
 
-//Сравните полученный код потока записи с кодом потока чтения - они создаются и используются сходным образом.
+const ws = fs.createWriteStream(filePath);
 
-//const fs = require('fs');
+stdout.write('Enter the word and press Enter\n');
 
-//const input = fs.createReadStream('source.txt', 'utf-8');
-//const output = fs.createWriteStream('destination.txt');
+// Запись данных производится с помощью метода write(), в который передаются данные. Для окончания записи вызывается метод end().
 
-//input.on('data', chunk => output.write(chunk));
-//input.on('error', error => console.log('Error', error.message));
+stdin.on('data', data => {
+   if (data.toString() === 'exit\n') {
+      stdout.write('Thank you and goodbye\n');
+      process.exit();
+   } else {
+      ws.write(data);
+   }
+});
 
-const fs = require('fs');
-const {stdin, stdout} = require('process');
-const path = require('path');
+//Событие: 'SIGINT'¶
 
-filePath = path.join(__dirname)
+// Событие 'SIGINT' генерируется всякий раз, когда поток ввода получает ввод Ctrl+C, известный обычно как SIGINT. Если нет зарегистрированных слушателей события 'SIGINT', когда поток ввода получает SIGINT, будет выдано событие 'pause'.
+
+
+process.on('SIGINT', () => {
+   stdout.write('\nThank you and goodbye\n');
+   process.exit();
+});
 
 
 //r: открыть файл для чтения
@@ -34,7 +44,11 @@ filePath = path.join(__dirname)
 //a+: открыть файл для чтения и для записи данных в конец файла
 
 
-fs.open('draft.txt', (err) => {
-   if (err) throw err;
-   stdout.write('File created');
-});
+// fs.open(path.join(filePath, 'draft.txt'), 'w', (err) => {
+//    if (err) throw err;
+//    stdout.write('File created');
+// });
+
+
+
+
