@@ -6,8 +6,6 @@ const {stdin, stdout} = require('process');
 const filePath = path.join(__dirname, 'secret-folder');
 
 
-const array = [];
-
 // Sometimes you want to retrieve the file name without the extension. You may use the built-in Node.js path module to do that. You can use the Path.parse method to parse a given file path into the individual parts. Then, retrieve the file name without the extension:
 
 fs.readdir(filePath, {withFileTypes: true }, (err, files) => {//проверяем папку 'secret-folder'
