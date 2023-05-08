@@ -23,3 +23,15 @@ fs.access(projectDist, err => {
         })
     }
 })
+fs.readdir(pathToFiles, {withFileTypes: true }, (err, items) => {
+    items.forEach(item => {
+        if (err) throw err;
+        if (item.isFile() && path.extname(item.name) === '.css') {
+            const readStream = fs.createReadStream(path.join(pathToFiles, item.name), 'utf-8');
+            readStream.on('data', data => {
+                writeStream.write(data);
+            });
+        }
+    })
+    console.log(items);
+})

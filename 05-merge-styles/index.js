@@ -10,7 +10,7 @@ fs.readdir(pathToFiles, {withFileTypes: true }, (err, items) => {
         if (err) throw err;
         //all files
         //need to exclude .txt
-        console.log(path.extname(item.name));
+        //console.log(path.extname(item.name));
         if (item.isFile() && path.extname(item.name) === '.css') {
             const readStream = fs.createReadStream(path.join(pathToFiles, item.name), 'utf-8');
             readStream.on('data', data => {
