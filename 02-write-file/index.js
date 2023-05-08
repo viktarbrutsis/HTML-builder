@@ -17,7 +17,7 @@ stdout.write('Enter the word and press Enter\n');
 // Запись данных производится с помощью метода write(), в который передаются данные. Для окончания записи вызывается метод end().
 
 stdin.on('data', data => {
-   if (data.toString() === 'exit\n') {
+   if (data.toString().trim() === 'exit') {
       stdout.write('Thank you and goodbye\n');
       process.exit();
    } else {
